@@ -5,79 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:github_repository/models/models.dart';
 import 'package:http/http.dart' as http;
 
-CommitsModel historyCommits = CommitsModel(
-  sha: '',
-  nodeId: '',
-  commit: Commit(
-    author: CommitAuthor(
-      name: '',
-      email: '',
-      date: DateTime.now(),
-    ),
-    committer: CommitAuthor(
-      name: '',
-      email: '',
-      date: DateTime.now(),
-    ),
-    message: '',
-    tree: Tree(
-      sha: '',
-      url: '',
-    ),
-    url: '',
-    commentCount: 0,
-    verification: Verification(
-      verified: false,
-      reason: '',
-      signature: '',
-      payload: '',
-    ), 
-  ),
-  url: '',
-  htmlUrl: '',
-  commentsUrl: '',
-  author: CommitsModelAuthor(
-    login: '',
-    id: 0,
-    nodeId: '',
-    avatarUrl: '',
-    gravatarId: '',
-    url: '',
-    htmlUrl: '',
-    followersUrl: '',
-    followingUrl: '',
-    gistsUrl: '',
-    starredUrl: '',
-    subscriptionsUrl: '',
-    organizationsUrl: '',
-    reposUrl: '',
-    eventsUrl: '',
-    receivedEventsUrl: '',
-    type: '',
-    siteAdmin: false,
-  ),
-  committer: CommitsModelAuthor(
-    login: '',
-    id: 0,
-    nodeId: '',
-    avatarUrl: '',
-    gravatarId: '',
-    url: '',
-    htmlUrl: '',
-    followersUrl: '',
-    followingUrl: '',
-    gistsUrl: '',
-    starredUrl: '',
-    subscriptionsUrl: '',
-    organizationsUrl: '',
-    reposUrl: '',
-    eventsUrl: '',
-    receivedEventsUrl: '',
-    type: '',
-    siteAdmin: false,
-  ),
-  parents: [],
-);
+List<CommitsModel> historyCommits = [];
 
 class CommitsScreen extends StatefulWidget {
 
@@ -94,7 +22,9 @@ class _CommitsScreenState extends State<CommitsScreen> {
   @override
   void initState() {
     getCommits().then((commits) {
-      print(commits);
+      setState(() {
+        historyCommits = commits;
+      });
     });
     super.initState();
   }
@@ -132,7 +62,42 @@ class _CommitsScreenState extends State<CommitsScreen> {
         body: SizedBox(
           height: size.height,
           width: size.width,
-          
+          child: ListView.builder(
+            itemCount: historyCommits.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                contentPadding: const EdgeInsets.all(10),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                title: AutoSizeText(
+                  historyCommits[index].commit.author.name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                subtitle: Text(
+                  historyCommits[index].commit.message,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                trailing: IconButton(
+                  icon: const Icon(
+                    Icons.arrow_forward_ios_rounded, 
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  onPressed: () => Navigator.of(context).pushNamed(
+                    CommitsScreen.routeName,
+                    arguments: historyCommits,
+                  ),
+                ),
+              );
+            }
+          ),
         )
       ),
     );
@@ -152,7 +117,12 @@ Future getCommits() async {
     },
   );
 
-  final commits = CommitsModel.fromRawJson(response.body).toJson();
+  if (response.statusCode == 200) {
+    final List<dynamic> commitsJson = jsonDecode(response.body);
+    final List<CommitsModel> commits = commitsJson.map((json) => CommitsModel.fromJson(json)).toList();
+    return commits;
+  } else {
+    throw Exception('Failed to load commits');
+  }
 
-  print(commits);
 }
