@@ -4,9 +4,9 @@ This Flutter application utilizes the GitHub API to display the commit history o
 
 ## Screenshots
 
-![Screenshot_20240204-004806](https://github.com/pomarmcdrac/GitHub-Repository/assets/99893187/64abd413-335f-4203-8fc9-0c484bcc285d =33%)
-![Screenshot_20240204-004811](https://github.com/pomarmcdrac/GitHub-Repository/assets/99893187/25cd5efd-5742-4ff5-8f71-af87114381b7 =33%)
-![Screenshot_20240204-004817](https://github.com/pomarmcdrac/GitHub-Repository/assets/99893187/9f2da6ee-cfee-4140-8d13-94410fd6c8cd =33%)
+![Screenshot_20240204-004806](https://github.com/pomarmcdrac/GitHub-Repository/assets/99893187/64abd413-335f-4203-8fc9-0c484bcc285d=33%)
+![Screenshot_20240204-004811](https://github.com/pomarmcdrac/GitHub-Repository/assets/99893187/25cd5efd-5742-4ff5-8f71-af87114381b7=33%)
+![Screenshot_20240204-004817](https://github.com/pomarmcdrac/GitHub-Repository/assets/99893187/9f2da6ee-cfee-4140-8d13-94410fd6c8cd=33%)
 
 ## Key Features
 
