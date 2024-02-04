@@ -64,35 +64,96 @@ class _CommitsScreenState extends State<CommitsScreen> {
           width: size.width,
           child: ListView.builder(
             itemCount: historyCommits.length,
+            padding: const EdgeInsets.all(10),
             itemBuilder: (context, index) {
-              return ListTile(
-                contentPadding: const EdgeInsets.all(10),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                title: AutoSizeText(
-                  historyCommits[index].commit.author.name,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: const [
+                      BoxShadow(
+                        blurRadius: 2,
+                        spreadRadius: 0.5,
+                        offset: Offset(0, 0),
+                        color: Colors.grey,
+                      )
+                    ],
+                    color: Colors.black
                   ),
-                ),
-                subtitle: Text(
-                  historyCommits[index].commit.message,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                trailing: IconButton(
-                  icon: const Icon(
-                    Icons.arrow_forward_ios_rounded, 
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  onPressed: () => Navigator.of(context).pushNamed(
-                    CommitsScreen.routeName,
-                    arguments: historyCommits,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        title: AutoSizeText(
+                          'Author: ${historyCommits[index].commit.author.name}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 1,
+                          maxFontSize: 18,
+                          minFontSize: 12,
+                        ),
+                        subtitle: AutoSizeText(
+                          'Message: ${historyCommits[index].commit.message}',
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                          ),
+                          maxLines: 3,
+                          maxFontSize: 14,
+                          minFontSize: 8,
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(
+                            Icons.arrow_forward_ios_rounded, 
+                            color: Colors.blueAccent[900],
+                            size: 30,
+                          ),
+                          onPressed: () => Navigator.of(context).pushNamed(
+                            CommitsScreen.routeName,
+                            arguments: historyCommits,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: size.width,
+                        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            AutoSizeText(
+                              'Date: ${historyCommits[index].commit.author.date.toString().substring(0,10)}',
+                              style:  TextStyle(
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              maxFontSize: 10,
+                              minFontSize: 6,
+                            ),
+                            const SizedBox(width: 10,),
+                            AutoSizeText(
+                              'Time: ${historyCommits[index].commit.author.date.toString().substring(11,19)} hrs',
+                              style:  TextStyle(
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              maxFontSize: 10,
+                              minFontSize: 6,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               );
