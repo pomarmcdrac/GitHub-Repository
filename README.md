@@ -25,8 +25,8 @@ To test the application in your local environment, follow these steps:
 
 ## Dependencies
 
-- **http: For making HTTP requests to the GitHub API.
-- **url_launcher: For opening external links.
+- *http:* For making HTTP requests to the GitHub API.
+- *url_launcher:* For opening external links.
 
 ## Contributing
 
